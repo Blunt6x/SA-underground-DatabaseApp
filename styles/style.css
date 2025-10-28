@@ -4,7 +4,21 @@
   --gap:12px; --glass: rgba(255,255,255,0.03);
 }
 *{box-sizing:border-box}
-body{margin:0;font-family:Inter,system-ui,Segoe UI,Roboto,"Helvetica Neue",Arial;background:var(--bg);color:#fff;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}
+body{
+  margin:0;
+  font-family:Inter,system-ui,Segoe UI,Roboto,"Helvetica Neue",Arial;
+  background:var(--bg);
+  color:#fff;
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+  opacity: 0;
+  animation: fadeIn 0.5s ease-out forwards;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
 .container{max-width:1100px;margin:20px auto;padding:12px}
 .site-header{display:flex;align-items:center;justify-content:center;padding:20px}
 .brand h1{margin:0;font-size:28px;letter-spacing:0.5px}
@@ -21,17 +35,73 @@ body{margin:0;font-family:Inter,system-ui,Segoe UI,Roboto,"Helvetica Neue",Arial
 .btn:hover{transform:translateY(-2px);filter:brightness(1.05)}
 
 .artist-list{list-style:none;padding:0;margin:0;display:grid;gap:14px;grid-template-columns:repeat(auto-fill,minmax(240px,1fr))}
-.artist-card{display:flex;gap:12px;align-items:center;background:linear-gradient(180deg, rgba(255,255,255,0.02), transparent);padding:14px;border-radius:10px;cursor:pointer;transition:transform .18s,box-shadow .18s,opacity .12s}
-.artist-card:hover{transform:translateY(-6px);box-shadow:0 12px 32px rgba(0,0,0,0.6)}
+.artist-card{
+  display:flex;
+  gap:12px;
+  align-items:center;
+  background:linear-gradient(180deg, rgba(255,255,255,0.02), transparent);
+  padding:14px;
+  border-radius:10px;
+  cursor:pointer;
+  transition: all 0.3s ease-out;
+  animation: cardFadeIn 0.5s ease-out forwards;
+}
+
+@keyframes cardFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.artist-card:hover{
+  transform:translateY(-6px);
+  box-shadow:0 12px 32px rgba(0,0,0,0.6);
+  background: linear-gradient(180deg, rgba(255,255,255,0.04), rgba(255,255,255,0.01));
+}
 .artist-thumb{width:72px;height:72px;border-radius:10px;flex:0 0 72px;object-fit:cover;background:#222;box-shadow:0 6px 22px rgba(0,0,0,0.6)}
 .artist-info{flex:1;min-width:0}
 .artist-name{font-weight:700;margin:0;font-size:16px}
 .artist-meta{color:var(--muted);font-size:13px;margin-top:6px}
 
 /* modal */
-.modal{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,0.6)}
-.modal.hidden{display:none}
-.modal-content{position:relative;background:#0b0b0b;padding:20px;border-radius:14px;width:min(900px,95%);max-height:90vh;overflow:auto}
+.modal{
+  position:fixed;
+  inset:0;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:rgba(0,0,0,0);
+  transition: background 0.3s ease-out;
+  backdrop-filter: blur(0px);
+}
+.modal:not(.hidden) {
+  background:rgba(0,0,0,0.6);
+  backdrop-filter: blur(5px);
+}
+.modal.hidden{
+  display:none;
+}
+.modal-content{
+  position:relative;
+  background:#0b0b0b;
+  padding:20px;
+  border-radius:14px;
+  width:min(900px,95%);
+  max-height:90vh;
+  overflow:auto;
+  transform: scale(0.9);
+  opacity: 0;
+  transition: all 0.3s ease-out;
+}
+.modal:not(.hidden) .modal-content {
+  transform: scale(1);
+  opacity: 1;
+}
 .close{position:absolute;right:18px;top:18px;background:transparent;border:none;color:#fff;font-size:26px;cursor:pointer}
 .artist-detail{display:flex;gap:18px;align-items:flex-start}
 .artist-detail img{width:180px;height:180px;object-fit:cover;border-radius:12px;box-shadow:0 12px 40px rgba(0,0,0,0.6)}
@@ -43,15 +113,3 @@ body{margin:0;font-family:Inter,system-ui,Segoe UI,Roboto,"Helvetica Neue",Arial
   .artist-detail{flex-direction:column;align-items:center}
   .artist-detail img{width:220px;height:220px}
 }
-/* Page transition animation */
-.page-transition {
-  opacity: 0;
-  transform: scale(0.98);
-  transition: opacity 0.4s ease, transform 0.4s ease;
-}
-
-.page-transition-active {
-  opacity: 1;
-  transform: scale(1);
-}
-

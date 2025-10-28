@@ -1,0 +1,18 @@
+{
+  "name": "sa-underground-backend",
+  "version": "1.0.0",
+  "description": "Lightweight Express backend to manage artists.json for SA Underground site",
+  "main": "server.js",
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.18.2",
+    "body-parser": "^1.20.2",
+    "cors": "^2.8.5",
+    "uuid": "^9.0.0"
+  }
+}

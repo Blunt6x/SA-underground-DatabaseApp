@@ -25,9 +25,10 @@ function renderList(list){
     return;
   }
   artistsEl.innerHTML = '';
-  list.forEach(a => {
+  list.forEach((a, index) => {
     const li = document.createElement('li');
     li.className = 'artist-card';
+    li.style.animationDelay = `${index * 0.05}s`;
     li.tabIndex = 0;
     li.innerHTML = `
       <img class="artist-thumb" src="${a.image || 'assets/default.jpg'}" alt="${escapeHtml(a.name)}">
@@ -66,36 +67,13 @@ function openDetail(a){
   modal.classList.remove('hidden');
 }
 
-
 modalClose.addEventListener('click', ()=> modal.classList.add('hidden'));
 modal.addEventListener('click', (e)=> { if(e.target === modal) modal.classList.add('hidden'); });
 document.getElementById('year').textContent = new Date().getFullYear();
 
 adminBtn.addEventListener('click', ()=> {
-  alert('Admin panel coming soon — for now, edit data/artists.json directly.');
+  window.location.href = 'admin.html';
 });
 
 // simple sanitizer
 function escapeHtml(s){ return String(s || '').replace(/[&<>"']/g, c=>({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' }[c])) }
-document.addEventListener("DOMContentLoaded", () => {
-  // Add animation class when the page is loaded
-  document.body.classList.add("page-transition");
-  setTimeout(() => {
-    document.body.classList.add("page-transition-active");
-  }, 10);
-
-  // Handle artist clicks
-  const artistCards = document.querySelectorAll(".artist-card");
-  artistCards.forEach(card => {
-    card.addEventListener("click", e => {
-      e.preventDefault();
-      const href = card.getAttribute("href");
-
-      // Animate out before going to artist.html
-      document.body.classList.remove("page-transition-active");
-      setTimeout(() => {
-        window.location.href = href;
-      }, 400); // match the CSS transition time
-    });
-  });
-});
